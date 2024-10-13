@@ -6,14 +6,14 @@
   - name: turn off a swap
     shell: swapoff -a
 
-  - name: delete a swap file #in test run this task was skiped and file was missing
-    shell: rm {{ swapfile }}
+  - name: delete a swap file
+    shell: rm {{ swap_file }}
     when: ansible_facts.swapfree_mb > 0
 
   - name: delete swap file from fstab
     mount:
       name: none
-      src: "{{ swapfile }}"
+      src: "{{ swap_file }}"
       fstype: swap
       opts: sw
       passno: 0
