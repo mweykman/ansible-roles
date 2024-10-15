@@ -1,14 +1,18 @@
 ---
-# tasks file for swaptrasher
- # - name: find swapfile
- #   shell: swapfile=$(awk '{print $1}' /proc/swaps | tail -1) #searh where is swap file in system and put answer in var $swapfile
+ #tasks file for swaptrasher
+#- name: find swapfile
+#  shell: echo $(awk '{print $1}' /proc/swaps | tail -1) #searh where is swap file in system and put answer in var $swapfile
+#  register: swap_file
+
 - block:
   - name: turn off a swap
     shell: swapoff -a
 
   - name: delete a swap file
-    shell: rm {{ swap_file }}
-    when: ansible_facts.swapfree_mb > 0
+    file: 
+      path: "{{ swap_file }}" 
+      state: absent
+#    when: ansible_facts.swapfree_mb > 0
 
   - name: delete swap file from fstab
     mount:
