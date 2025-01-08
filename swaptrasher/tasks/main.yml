@@ -3,6 +3,7 @@
 #- name: find swapfile
 #  shell: echo $(awk '{print $1}' /proc/swaps | tail -1) #searh where is swap file in system and put answer in var $swapfile
 #  register: swap_file
+# test git
 
 - block:
   - name: turn off a swap
