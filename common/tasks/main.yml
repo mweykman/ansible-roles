@@ -10,7 +10,6 @@
       shell: fallocate -l {{ swap_size }} /{{ swap_file }}
       args:
         creates: "{{ swap_file }}"
-      become: yes
 
     - name: set the correct permissions
       file:
@@ -18,17 +17,14 @@
         owner: root
         group: root
         mode: '0600'
-      become: yes
 
     - name: make the file a swap file
       shell: mkswap {{ swap_file }}
       when: ansible_facts.swapfree_mb == 0
-      become: yes
 
     - name: enable the swap file
       shell: swapon {{ swap_file }}
       when: ansible_facts.swapfree_mb == 0
-      become: yes
 
     - name: add swap file to fstab
       mount:
@@ -39,10 +35,42 @@
         passno: 0
         dump: 0
         state: present
-      become: yes
+  become: yes
 
 # tasks for changing hostnames
 - name: changing hostname
   hostname:
     name: "{{ inventory_hostname_short }}"
   become: yes
+
+# tasks for installation packages
+- name: installation packages
+  apt:
+    name:  "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - "{{ packages }}"
+  become: yes
+
+# task for installtion special applications
+
+- name: installation packages
+  apt:
+    name:  "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - "{{ apps_db }}"
+  become: yes
+  when: "'db' in group_names"
+
+- name: installation packages
+  apt:
+    name:  "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - "{{ apps_web }}"
+  become: yes
+  when: "'web' in group_names"
