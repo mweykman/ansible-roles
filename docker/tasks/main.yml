@@ -5,14 +5,17 @@
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
+
     - name: add repository for docker
       apt_repository:
         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{
           ansible_distribution_release }} stable
         state: present
+
     - name: update cashe
       apt:
         update_cache: yes
+
     - name: install docker
       apt:
         name: "{{ item }}" #option №1 to install of docker-compose
@@ -20,6 +23,7 @@
 #        update_cache: yes
       loop:
         - "{{ app_list }}"
+
     - name: check/start docker service
       service:
         name: docker
@@ -29,14 +33,14 @@
 
 - name: Adding user to docker group  
   user: 
-    name: user #"{{ ansible_user }}"
+    name: "{{ remote_user }}"
     groups: docker
     append: yes
   become: yes
 
 - name: Install Docker-Compose and Set Permissions #option №2 to install docker-compose
   get_url:
-    url: https://github.com/docker/compose/releases/download/{{ dock_comp_vers }}/docker-compose-linux-x86_64
+    url: https://github.com/docker/compose/releases/download/v{{ dock_comp_vers }}/docker-compose-linux-x86_64
     dest: /usr/local/bin/docker-compose
     mode: '755'
   become: yes

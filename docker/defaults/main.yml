@@ -1,7 +1,7 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # defaults file for docker
-dock_comp_vers: v2.32.2 #last version for 9.01.25
+dock_comp_vers: 2.32.2 #last version for 9.01.25
 app_list:
   - docker-ce
 #  - docker-compose #uncomment for install docker-compose (option №1)

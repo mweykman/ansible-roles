@@ -61,16 +61,5 @@
     state: present
     update_cache: yes
   loop:
-    - "{{ apps_db }}"
+    - "{{ packages }}"
   become: yes
-  when: "'db' in group_names"
-
-- name: installation packages
-  apt:
-    name:  "{{ item }}"
-    state: present
-    update_cache: yes
-  loop:
-    - "{{ apps_web }}"
-  become: yes
-  when: "'web' in group_names"

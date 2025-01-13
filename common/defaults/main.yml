@@ -5,14 +5,6 @@ TZ: Europe/Moscow
 swap_file: /swapfile
 packages: 
   - mc
-  - htop
-  - net-tools
-  - wget
-apps_db:
-  - mc 
-  - htop
-  - rsync
-apps_web:
-  - git
-  - zip
-  - htop
+#  - net-tools
+#  - wget
+#  - nano
