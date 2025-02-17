@@ -40,7 +40,8 @@
 # tasks for changing hostnames
 - name: changing hostname
   hostname:
-    name: "{{ inventory_hostname_short }}"
+#    name: "{{ inventory_hostname_short }}"
+    name: "{{ hostname }}"
   become: yes
 
 # tasks for installation packages
