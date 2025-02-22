@@ -38,7 +38,7 @@
     append: yes
   become: yes
 
-- name: Install Docker-Compose and Set Permissions #option №2 to install docker-compose
+- name: Install Docker-Compose and Set Permissions #option №2 to install docker-compose. #s1e15 task 3
   get_url:
     url: https://github.com/docker/compose/releases/download/v{{ dock_comp_vers }}/docker-compose-linux-x86_64
     dest: /usr/local/bin/docker-compose
