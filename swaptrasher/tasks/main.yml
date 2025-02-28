@@ -8,17 +8,6 @@
   debug:
     var: swap_path.stdout
 
-# #s1e15 task 1
-- name: check load average
-  shell: uptime | awk '{print $9, $10, $11, $12, $13}'
-  register: load_avg
-  
-- debug: 
-    msg: "{{ load_avg }}"
-- name: load average short form
-  debug: 
-    var: load_avg.stdout #более короткий вариант
-
 - block:
   - name: turn off a swap
     shell: swapoff -a
