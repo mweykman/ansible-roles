@@ -38,26 +38,33 @@
     append: yes
   become: yes
 
-- name: Install Docker-Compose and Set Permissions #option №2 to install docker-compose. #s1e15 task 3
-  get_url:
-    url: https://github.com/docker/compose/releases/download/v{{ dock_comp_vers }}/docker-compose-linux-x86_64
-    dest: /usr/local/bin/docker-compose
-    mode: '755'
+- name: Adding gitlab-runner user to docker group  
+  user: 
+    name: "{{ remote_user_runner }}"
+    groups: docker
+    append: yes
   become: yes
+
+#- name: Install Docker-Compose and Set Permissions #option №2 to install docker-compose. #s1e15 task 3
+#  get_url:
+#    url: https://github.com/docker/compose/releases/download/v{{ dock_comp_vers }}/docker-compose-linux-x86_64
+#    dest: /usr/local/bin/docker-compose
+#    mode: '755'
+#  become: yes
 
 # S1e9 создаем докерфайл с nginx и lua, тестируем  
-- name: copy file for task
-  copy:
-    src: files/
-    dest: /docker
-    owner: user
-    group: user
-    mode: '0644'
-  become: yes
+#- name: copy file for task
+#  copy:
+#    src: files/
+#    dest: /docker
+#    owner: user
+#    group: user
+#    mode: '0644'
+#  become: yes
 
 # гуглить ansible docker build и править задачу
-- name: create dockerfile
-  shell: cd /docker && docker build -t lua .
+#- name: create dockerfile
+#  shell: cd /docker && docker build -t lua .
 
 #  далее подключаемся к виртуалке, запускаем контейнер:
 #  docker run -d -p 81:81 --name lua lua

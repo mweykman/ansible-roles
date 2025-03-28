@@ -1,0 +1,48 @@
+#SPDX-License-Identifier: MIT-0
+# tasks file for runner
+---
+  - name: Install required packages
+    apt:
+      name:  "{{ item }}"
+      state: present
+      update_cache: yes
+      loop:
+        - "{{ packages }}"
+      become: yes
+
+  - name: Download GitLab Runner package
+    get_url:
+      url: "{{ gitlab_runner_url }}"
+      dest: "/usr/local/bin/gitlab-runner"
+      mode: '755'
+
+  - name: Add the user 'gitlab-runner'
+    ansible.builtin.user:
+      name: gitlab-runner
+      comment: "GitLab Runner"
+      create_home: yes
+      shell: /bin/bash
+      group: docker
+
+  - name: Install and run GitLab Runner
+    shell: sudo gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner && sudo gitlab-runner start
+
+  - name: Register GitLab Runner
+    command: >
+      gitlab-runner register 
+      --non-interactive 
+      --url "{{ gitlab_runner_registration_url }}" 
+      --registration-token "{{ gitlab_runner_token }}" 
+      --executor "{{ gitlab_runner_executor }}" 
+      --description "GitLab Runner" 
+      --tag-list "{{ gitlab_runner_tags }}" 
+      --run-untagged="false" 
+      --locked="false"
+#    args:
+#      creates: "/etc/gitlab-runner/config.toml"
+
+#  - name: Enable and start GitLab Runner service
+#    systemd:
+#      name: gitlab-runner
+#      enabled: yes
+#      state: started

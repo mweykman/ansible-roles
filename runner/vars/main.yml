@@ -1,0 +1,9 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for runner
+gitlab_runner_token: xxx #token should be here
+#gitlab_runner_url: "https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb"
+gitlab_runner_url: "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64"
+gitlab_runner_registration_url: "https://gitlab.com/"
+gitlab_runner_executor: "shell"
+gitlab_runner_tags: "shell,linux"
