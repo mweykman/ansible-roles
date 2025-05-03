@@ -1,3 +1,10 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # vars file for nginx
+nginx_login:
+  - linuxfactory
+  - test
+nginx_pass: 
+  - linuxfactory
+  - test
+htpasswd_file: /etc/nginx/passwdfile

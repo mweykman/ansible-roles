@@ -13,7 +13,7 @@
   - name: Download GitLab Runner package
     get_url:
       url: "{{ gitlab_runner_url }}"
-      dest: "/usr/local/bin/gitlab-runner"
+      dest: "{{ gitlab_runner_folder }}"
       mode: '755'
 
   - name: Add the user 'gitlab-runner'
@@ -24,8 +24,15 @@
       shell: /bin/bash
       group: docker
 
-  - name: Install and run GitLab Runner
-    shell: sudo gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner && sudo gitlab-runner start
+  - name: Install #and run GitLab Runner #&& sudo gitlab-runner start
+    shell: sudo gitlab-runner install --user=gitlab-runner --working-directory={{ working-directory }} 
+    
+  - name: Запуск сервиса gitlab-runner
+    service:
+      name: gitlab-runner
+      state: started
+      enabled: true
+    become: true   
 
   - name: Register GitLab Runner
     command: >
@@ -40,9 +47,3 @@
       --locked="false"
 #    args:
 #      creates: "/etc/gitlab-runner/config.toml"
-
-#  - name: Enable and start GitLab Runner service
-#    systemd:
-#      name: gitlab-runner
-#      enabled: yes
-#      state: started

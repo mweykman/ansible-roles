@@ -7,3 +7,5 @@ gitlab_runner_url: "https://gitlab-runner-downloads.s3.amazonaws.com/latest/bina
 gitlab_runner_registration_url: "https://gitlab.com/"
 gitlab_runner_executor: "shell"
 gitlab_runner_tags: "shell,linux"
+gitlab_runner_folder: /usr/local/bin/gitlab-runner
+working-directory: /home/gitlab-runner

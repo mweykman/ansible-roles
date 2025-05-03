@@ -1,3 +1,11 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # defaults file for runner
+packages:  
+  - curl
+  - ca-certificates
+  - apt-transport-https
+  - software-properties-common
+
+gitlab_runner_folder: /usr/local/bin/gitlab-runner
+working-directory: /home/gitlab-runner
